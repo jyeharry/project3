@@ -10,7 +10,7 @@ import Stock from './components/Stock';
 const Routes = (
   <Router>
     <Route exact path='/' component={Home} />
-    <Route exact path='/stock' component={Stock} />
+    <Route exact path='/stock/:symbol' component={Stock} />
   </Router>
 );
 

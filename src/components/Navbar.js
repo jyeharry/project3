@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
 
-import {Link} from 'react-router-dom';
-import { Input, Button, Icon } from 'semantic-ui-react';
+import {Link, useHistory} from 'react-router-dom';
+import { Input, Button, Icon, Form } from 'semantic-ui-react';
 
 const Navbar = (props) => {
   const [search, setSearch] = useState('');
+  const history = useHistory();
 
   const _handleSubmit = (e) => {
     e.preventDefault();
-    props.history.push(`/stock/${search}`);
+    history.push(`/stock/${search}`);
   }
 
   return (
@@ -19,12 +20,14 @@ const Navbar = (props) => {
       <Link to='/watchlist'>
         Watchlist
       </Link>
-      <form onSubmit={_handleSubmit}>
-        <Input onInput={ (e) => setSearch(e.target.value) } placeholder='AAPL' />
-        <Button icon>
-          <Icon name='search' />
-        </Button>
-      </form>
+      <Form onSubmit={_handleSubmit}>
+        <Form.Group>
+          <Form.Input type='search' width={3} onInput={ (e) => setSearch(e.target.value) } placeholder='AAPL' />
+          <Form.Button icon>
+            <Icon name='search' />
+          </Form.Button>
+        </Form.Group>
+      </Form>
     </nav>
   );
 }
