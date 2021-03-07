@@ -4,12 +4,12 @@ import {Link, useHistory} from 'react-router-dom';
 import { Input, Button, Icon, Form } from 'semantic-ui-react';
 
 const Navbar = (props) => {
-  const [search, setSearch] = useState('');
+  const [symbol, setSymbol] = useState('');
   const history = useHistory();
 
   const _handleSubmit = (e) => {
     e.preventDefault();
-    history.push(`/stock/${search}`);
+    history.push(`/stock/${symbol}`);
   }
 
   return (
@@ -22,7 +22,7 @@ const Navbar = (props) => {
       </Link>
       <Form onSubmit={_handleSubmit}>
         <Form.Group>
-          <Form.Input type='search' width={3} onInput={ (e) => setSearch(e.target.value) } placeholder='AAPL' />
+          <Form.Input type='search' width={3} onInput={ (e) => setSymbol(e.target.value) } placeholder='AAPL' />
           <Form.Button icon>
             <Icon name='search' />
           </Form.Button>
