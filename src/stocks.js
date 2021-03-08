@@ -1,4 +1,3 @@
-import axios from 'axios';
 const alpha = require('alphavantage')({key: '9CVZ2XUSITT4TUTV'});
 
 const Stock = {
@@ -10,17 +9,25 @@ const Stock = {
       // }
       // return prices.reverse();
       return data["Time Series (5min)"];
-    });
+    }).catch((err) => console.log(err));
   },
 
   getDaysCompact(symbol) {
-    return alpha.data.daily_adjusted(symbol, 'compact').then((data) => {
-      let prices = [];
-      for (let date in data["Time Series (Daily)"]) {
-        prices.push(data["Time Series (Daily)"][date]["4. close"]);
-      }
-      return prices.reverse();
+    return alpha.data.daily_adjusted(symbol, 'compact', 'JSON').then((data) => {
+      return data["Time Series (Daily)"];
     });
+  },
+
+  getXDays(symbol, numOfDays) {
+    return this.getDaysCompact(symbol).then((data) => {
+      const closingPrices = { dates: [], prices: [] };
+      for (const [date, prices] of Object.entries(data)) {
+        if (numOfDays-- === 0) break;
+        closingPrices.dates.unshift(date);
+        closingPrices.prices.unshift(parseFloat(prices["4. close"]));
+      }
+      return closingPrices;
+    }).catch((err) => console.log(err));
   },
 
   get100Days(symbol) {
