@@ -9,6 +9,7 @@ class Stock extends Component {
     super(props);
     this.state = {
       symbol: '',
+      prevSymbol: '',
       dates: [],
       prices: [],
     };
@@ -28,8 +29,8 @@ class Stock extends Component {
     console.log('end of componentDidUpdate method in Stock.js ////////////////////////////////////////////////////////');
     const {symbol} = this.props.match.params;
     if (prevState.symbol !== symbol) {
-      Stocks.getXDays(this.state.symbol, 20).then((data) => {
-        this.setState({symbol: symbol, dates: data.dates, prices: data.prices});
+      Stocks.getXMonths(symbol, 240).then((data) => {
+        this.setState({symbol: symbol, prevSymbol: prevState.symbol, dates: data.dates, prices: data.prices});
       });
     }
   }
@@ -39,7 +40,7 @@ class Stock extends Component {
       <div>
         <Navbar/>
         <h1>Stock coming soon</h1>
-        {this.state.dates.length > 0 && <LineGraph symbol={this.state.symbol} dates={this.state.dates} prices={this.state.prices}/>}
+        {this.state.symbol !== this.state.prevSymbol && this.state.prices.length > 0 && <LineGraph symbol={this.state.symbol} dates={this.state.dates} prices={this.state.prices}/>}
       </div>
     );
   }
