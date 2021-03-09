@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 import {Link, useHistory} from 'react-router-dom';
-import { Input, Button, Icon, Form } from 'semantic-ui-react';
+import { Icon, Form } from 'semantic-ui-react';
 
 const Navbar = (props) => {
   const [symbol, setSymbol] = useState('');

@@ -1,6 +1,5 @@
 import React from 'react';
 
-import {Link} from 'react-router-dom';
 import 'semantic-ui-css/semantic.css';
 
 import Navbar from './Navbar';
