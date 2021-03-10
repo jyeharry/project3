@@ -9,11 +9,6 @@ let lineChart;
 class LineGraph extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      symbol: '',
-      dates: [],
-      prices: [],
-    }
     this.updateGraph = this.updateGraph.bind(this);
   }
 
@@ -21,7 +16,7 @@ class LineGraph extends Component {
 
   updateGraph() {
     const myChartRef = this.chartRef.current.getContext("2d");
-    const {quantity, data: {dates, prices}} = this.props.data;
+    const {quantity, data: {dates, prices}} = this.props.chartData;
     dates.splice(0, dates.length - quantity);
     prices.splice(0, prices.length - quantity);
     const borderColor = prices[0] < prices[prices.length - 1] ? 'rgba(97, 177, 90, 1)' : 'rgba(255, 99, 132, 1)';
@@ -87,7 +82,7 @@ class LineGraph extends Component {
   componentDidUpdate(prevProps) {
     console.log('');
     console.log('component did update in LineGraph.js');
-    if (prevProps.symbol !== this.props.symbol || prevProps.data.timePeriod !== this.props.data.timePeriod) {
+    if (prevProps.symbol !== this.props.symbol || prevProps.chartData.timePeriod !== this.props.chartData.timePeriod) {
       this.updateGraph();
       console.log('linegraph did update');
     }

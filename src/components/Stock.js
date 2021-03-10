@@ -3,8 +3,9 @@ import {Button} from 'semantic-ui-react';
 
 import Navbar from './Navbar';
 import LineGraph from './LineGraph';
-import Stocks from '../stocks.js';
+import InvestmentCalculator from './InvestmentCalculator';
 
+import Stocks from '../stocks.js';
 import classes from "../css/LineGraph.module.css";
 
 class Stock extends Component {
@@ -12,8 +13,7 @@ class Stock extends Component {
     super(props);
     this.state = {
       symbol: '',
-      prevSymbol: '',
-      priceData: {
+      stockData: {
         intraday: {
           dates: [],
           prices: []
@@ -40,45 +40,43 @@ class Stock extends Component {
         }
       }
     };
+    this.requestData = this.requestData.bind(this);
   }
 
   componentDidMount() {
     console.log('Stock.js did mount/////////////////////');
-    const {symbol} = this.props.match.params;
-    this.setState({symbol: symbol});
+    this.requestData();
   }
 
   componentDidUpdate(prevProps, prevState) {
     console.log('start of componentDidUpdate method in Stock.js');
+    if (prevProps.match.params.symbol === this.props.match.params.symbol) return;
+    console.log('-----------------------------------------------------stock.js did update');
+    this.requestData();
+  }
+
+  requestData() {
     const {symbol} = this.props.match.params;
-    console.log('prevState.symbol:', prevState.symbol);
-    console.log('this.state.symbol:', this.state.symbol);
-    console.log('this.props.match.params.symbol:', symbol);
-    console.log(prevState.symbol !== symbol);
-    // if a new stock was searched, get the new stocks data
-    if (prevState.symbol !== symbol) {
-      Promise.all([Stocks.getIntraday(symbol), Stocks.getDays(symbol), Stocks.getWeeks(symbol), Stocks.getMonths(symbol)]).then((values) => {
-      console.log('-----------------------------------------------------stock.js did update');
+    Promise.all([Stocks.getIntraday(symbol), Stocks.getDays(symbol), Stocks.getWeeks(symbol), Stocks.getMonths(symbol)]).then((values) => {
       console.log(values[0].dates);
-        this.setState({
-          symbol: symbol,
-          priceData: {
-            intraday: values[0],
-            day: values[1],
-            week: values[2],
-            month: values[3]
-          },
-          toggledChart: {
-            timePeriod: '1 day',
-            quantity: 100,
-            data: {
-              dates: values[0].dates,
-              prices: values[0].prices
-            }
+      this.setState({
+        symbol: symbol,
+        stockData: {
+          intraday: values[0],
+          day: values[1],
+          week: values[2],
+          month: values[3]
+        },
+        toggledChart: {
+          timePeriod: '1 day',
+          quantity: 100,
+          data: {
+            dates: values[0].dates,
+            prices: values[0].prices
           }
-        });
+        }
       });
-    }
+    });
   }
 
   _handleClick = (e) => {
@@ -87,11 +85,11 @@ class Stock extends Component {
   }
 
   Graph = () => {
-    const {symbol, prevSymbol, priceData: {intraday, day, week, month}, toggledChart} = this.state;
-    // this check is to prevent the graph from rerendering multiple times as the component updates. now it just disappears until it has the data it needs
-    if (symbol !== prevSymbol && toggledChart.data.prices.length > 0) {
+    const {symbol, stockData: {intraday, day, week, month}, toggledChart} = this.state;
+    // makes sure there is actually data to display, otherwise display loading...
+    if (toggledChart.data.prices.length > 0) {
       return (
-        <div>
+        <div className="interactiveChart">
           <div className={classes.buttonContainer}>
             <Button value={ JSON.stringify({timePeriod: '1 day', quantity: 100, data: intraday}) } onClick={this._handleClick}>
               1 day
@@ -115,7 +113,7 @@ class Stock extends Component {
               max
             </Button>
           </div>
-          <LineGraph symbol={symbol} data={toggledChart}/>
+          <LineGraph symbol={symbol} chartData={toggledChart}/>
         </div>
       );
     } else {
@@ -127,11 +125,14 @@ class Stock extends Component {
 
   render() {
     return (
-      <div className={classes.container}>
+      <>
         <Navbar/>
-        <h1>Stock coming soon</h1>
-        {this.Graph()}
-      </div>
+        <div className={classes.container}>
+          <h1>Stock coming soon</h1>
+          {this.Graph()}
+          {this.state.toggledChart.data.prices.length > 0 && false && <InvestmentCalculator symbol={this.state.symbol} chartData={this.state.stockData.month}/>}
+        </div>
+      </>
     );
   }
 }

@@ -1,34 +1,32 @@
 import React, { useState } from 'react';
-
 import {Link, useHistory} from 'react-router-dom';
-import { Icon, Form } from 'semantic-ui-react';
+import {Container, Menu, Form, Input, Button} from 'semantic-ui-react'
 
 const Navbar = (props) => {
-  const [symbol, setSymbol] = useState('');
   const history = useHistory();
 
   const _handleSubmit = (e) => {
     e.preventDefault();
-    history.push(`/stock/${symbol}`);
+    history.push(`/stock/${e.target[0].value}`);
   }
 
   return (
-    <nav>
-      <Link to='/'>
-        Home
-      </Link>
-      <Link to='/watchlist'>
-        Watchlist
-      </Link>
-      <Form onSubmit={_handleSubmit}>
-        <Form.Group>
-          <Form.Input type='search' width={3} onInput={ (e) => setSymbol(e.target.value) } placeholder='AAPL' />
-          <Form.Button icon>
-            <Icon name='search' />
-          </Form.Button>
-        </Form.Group>
-      </Form>
-    </nav>
+
+    <Menu fixed='top'>
+      <Container>
+        <Menu.Item as='a' href='/' header>
+          Investment Calculator
+        </Menu.Item>
+        <Menu.Item>
+          <Form onSubmit={_handleSubmit}>
+            <Form.Input type='text' placeholder='Search...' action>
+              <input />
+              <Button type='submit'>Search</Button>
+            </Form.Input>
+          </Form>
+        </Menu.Item>
+      </Container>
+    </Menu>
   );
 }
 

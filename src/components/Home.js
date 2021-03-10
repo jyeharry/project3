@@ -8,7 +8,7 @@ const Home = (props) => {
   return (
     <div>
       <Navbar/>
-      <h1>Home coming soon</h1>
+      <h1>Investment Calculator</h1>
     </div>
   )
 }
