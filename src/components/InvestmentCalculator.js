@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {Form} from 'semantic-ui-react';
 
-import LineGraph from './LineGraph';
 import LineChart from './LineChart';
 
 export default class InvestmentCalculator extends Component {
@@ -33,6 +32,9 @@ export default class InvestmentCalculator extends Component {
         valueAsNumber: regularInvestment
       }
     } = e.target;
+    investment = investment || 0;
+    regularInvestment = regularInvestment || 0;
+    years = years || 1;
     const numOfMonths = years * 12;
     const investmentValues = this.calculateInvestmentValues(investment, regularInvestment, numOfMonths);
     this.setState({
@@ -78,22 +80,21 @@ export default class InvestmentCalculator extends Component {
     };
     return (
       <div className='investmentGraph'>
-        <Form onSubmit={this._handleSubmit}>
+        <Form className='formCalculator' onSubmit={this._handleSubmit}>
           <Form.Group>
             <Form.Input
               fluid
               type='number'
               label='Initial investment'
               placeholder='$10,000'
-              width={4}
+              width={8}
             />
             <Form.Input
               fluid
               type='number'
-              label='Investment period in years (max 20)'
+              label='Investment period in years'
               placeholder='20 years'
-              width={4}
-              max={20}
+              width={8}
             />
           </Form.Group>
           <Form.Group>
@@ -102,14 +103,14 @@ export default class InvestmentCalculator extends Component {
               label='Regular investment'
               type='number'
               placeholder='$1,000'
-              width={4}
+              width={8}
             />
             <Form.Select
               fluid
               label='Investment frequency'
               placeholder='Frequency'
               options={options}
-              width={4}
+              width={8}
               onChange={this._handleSelect}
             />
           </Form.Group>

@@ -2,12 +2,10 @@ import React, {Component} from 'react';
 import {Button} from 'semantic-ui-react';
 
 import Navbar from './Navbar';
-import LineGraph from './LineGraph';
 import LineChart from './LineChart';
 import InvestmentCalculator from './InvestmentCalculator';
 
 import Stocks from '../stocks.js';
-import classes from "../css/LineGraph.module.css";
 
 class Stock extends Component {
   constructor(props) {
@@ -48,7 +46,8 @@ class Stock extends Component {
     this.requestData();
   }
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(prevProps) {
+    // only do an api call if a search has been made
     if (prevProps.match.params.symbol === this.props.match.params.symbol) return;
     this.requestData();
   }
@@ -85,8 +84,7 @@ class Stock extends Component {
     return (
       <>
         <Navbar/>
-        <div className={classes.container}>
-          <h1>Stock coming soon</h1>
+        <div>
           {this.state.toggledChart.data.prices.length > 0 && <InteractiveChart symbol={symbol} stockData={stockData} toggledChart={toggledChart} handleClick={this._handleClick} />}
           {this.state.toggledChart.data.prices.length > 0 && <InvestmentCalculator symbol={symbol} chartData={stockData.month}/>}
         </div>
@@ -99,7 +97,7 @@ const InteractiveChart = (props) => {
   const {symbol, stockData: {intraday, day, week, month}, toggledChart, handleClick} = props;
   return (
     <div className="interactiveChart">
-      <div className={classes.buttonContainer}>
+      <div className='buttonContainer'>
         <Button value={ JSON.stringify({timePeriod: '1 day', quantity: 100, data: intraday}) } onClick={handleClick}>
           1 day
         </Button>

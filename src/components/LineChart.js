@@ -67,12 +67,12 @@ export default class LineChart extends React.Component {
                     drawBorder: true
                 },
                 ticks: {
-                  callback: function(value, index, values) {
-                    const suffixes = ["", " k", " M", " G", " T", " P", " E", " Z", " Y", " * 10^27", " * 10^30", " * 10^33"]; // should be enough. Number.MAX_VALUE is about 10^308
+                  // format large numbers into their abbreviated forms ie 1000 = 1k
+                  callback: function(value) {
+                    const suffixes = ["", " k", " M", " G", " T", " P", " E", " Z", " Y", " * 10^27", " * 10^30", " * 10^33"];
                     let suffixIndex = 0;
                     while ((value /= 1000) >= 1) {suffixIndex++};
                     return '$' + (value * 1000).toFixed(2) + suffixes[suffixIndex];
-                    // return '$' + value.toLocaleString(undefined, { maximumFractionDigits: 2 });
                   }
                 }
               }]
