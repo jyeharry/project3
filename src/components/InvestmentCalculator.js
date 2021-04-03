@@ -9,7 +9,7 @@ export default class InvestmentCalculator extends Component {
     this.state = {
       investment: 0,
       numOfMonths: 12,
-      regularInvestment: 0,
+      recurringInvestment: 0,
       multiplier: 0,
       frequency: 0,
       investmentValues: []
@@ -29,17 +29,17 @@ export default class InvestmentCalculator extends Component {
         valueAsNumber: years
       },
       2: {
-        valueAsNumber: regularInvestment
+        valueAsNumber: recurringInvestment
       }
     } = e.target;
     investment = investment || 0;
-    regularInvestment = regularInvestment || 0;
+    recurringInvestment = recurringInvestment || 0;
     years = years || 1;
     const numOfMonths = years * 12;
-    const investmentValues = this.calculateInvestmentValues(investment, regularInvestment, numOfMonths);
+    const investmentValues = this.calculateInvestmentValues(investment, recurringInvestment, numOfMonths);
     this.setState({
       investment: investment,
-      regularInvestment: regularInvestment,
+      recurringInvestment: recurringInvestment,
       numOfMonths: numOfMonths,
       investmentValues: [...investmentValues],
     });
@@ -51,15 +51,15 @@ export default class InvestmentCalculator extends Component {
     this.setState({multiplier: value.multiplier, frequency: value.frequency});
   }
 
-  // maps share prices with investment while adding regularInvestment in order to get data needed for users chart
-  calculateInvestmentValues = (investment, regularInvestment, numOfMonths) => {
+  // maps share prices with investment while adding recurringInvestment in order to get data needed for users chart
+  calculateInvestmentValues = (investment, recurringInvestment, numOfMonths) => {
     const {prices} = this.props.chartData;
     const {multiplier, frequency} = this.state;
-    let newPrices = [...prices.slice(prices.length - numOfMonths)];
-    return newPrices.map((current, i) => {
-      if (i % frequency === 0) investment += regularInvestment * multiplier;
+    let shortenedPrices = [...prices.slice(prices.length - numOfMonths)];
+    return shortenedPrices.map((current, i) => {
+      if (i % frequency === 0) investment += recurringInvestment * multiplier;
       if (i === 0) return investment;
-      return investment *= newPrices[i] / newPrices[i-1];
+      return investment *= shortenedPrices[i] / shortenedPrices[i-1];
     });
   }
 

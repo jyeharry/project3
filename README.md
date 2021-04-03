@@ -1,70 +1,30 @@
-# Getting Started with Create React App
+# General Assembly Project 3
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Investment Calculator
 
-## Available Scripts
+See a demo [here](https://ga-project3.web.app/#/).
 
-In the project directory, you can run:
+This was my final project for General Assembly. We allowed to use what he had learnt over the whole course to build whatever we wanted.
 
-### `npm start`
+The motivation behind this particular app was my passion around the stock market and my lack of experience with ReactJS. I love to look at share price charts occasionally, so I wanted to build an app that could not only chart share prices, but also allow me to chart investments in whatever company you were looking at. As for the 'lack of experience with ReactJS' part, after learning a bit of React at GA, I found myself frustrated that I still didn't quite understand it. So I decided to throw myself into the deep-end by building my app with React.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### How it works
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+When the user enters a company's ticker symbol (American companies only) and presses search, two charts are displayed. One chart shows the company's share price history and can be toggled between different time periods, the other chart is accompanied with a form that allows the user to enter in their own custom investment amount, recurring investment and length of time, to graph what that invesment would look like.
 
-### `npm test`
+## Future updates
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+I'd like to come back to this project and populate the rest of the page with financial data on the company that has been searched. The data would include market capitalisation, earnings, dividends etc.
 
-### `npm run build`
+Speaking of dividends, I'd also like to add the ability to toggle whether dividends are being reinvested into the company into the second chart, to further visualise what your investment would look like.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Lastly, I'd also like to improve my React skills so that I could further improve the overall app.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Technologies used
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+BarHop was created with:
 
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+* ReactJS
+* Semantic-ui-react
+* Chart.js
+* AlphaVantage API

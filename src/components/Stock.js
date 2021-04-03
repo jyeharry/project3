@@ -47,7 +47,7 @@ class Stock extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    // only do an api call if a search has been made
+    // only do an api call if a new search has been made
     if (prevProps.match.params.symbol === this.props.match.params.symbol) return;
     this.requestData();
   }
