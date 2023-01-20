@@ -1,13 +1,8 @@
-import React from 'react';
-
 import 'semantic-ui-css/semantic.css';
 
-import Navbar from './Navbar';
-
-const Home = (props) => {
+const Home = () => {
   return (
     <>
-      <Navbar/>
       <div className='container'>
         <h1>Investment Calculator</h1>
         <p>

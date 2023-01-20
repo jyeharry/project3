@@ -1,33 +1,31 @@
-import React, { useState } from 'react';
-import {Link, useHistory} from 'react-router-dom';
-import {Container, Menu, Form, Input, Button} from 'semantic-ui-react'
+import { useNavigate } from 'react-router-dom'
+import { Container, Menu, Form, Button } from 'semantic-ui-react'
 
-const Navbar = (props) => {
-  const history = useHistory();
-
-  const _handleSubmit = (e) => {
-    e.preventDefault();
-    history.push(`/stock/${e.target[0].value}`);
-  }
+const Navbar = () => {
+  const navigate = useNavigate()
 
   return (
-
-    <Menu fixed='top'>
+    <Menu fixed="top">
       <Container>
-        <Menu.Item as='a' href='/' header>
+        <Menu.Item as="a" href="/" header>
           Investment Calculator
         </Menu.Item>
         <Menu.Item>
-          <Form onSubmit={_handleSubmit}>
-            <Form.Input type='text' placeholder='Search...' action>
+          <Form
+            onSubmit={(e: any) => {
+              e.preventDefault()
+              navigate(`/stock/${e.target[0].value}`)
+            }}
+          >
+            <Form.Input type="text" placeholder="Search..." action>
               <input />
-              <Button type='submit'>Search</Button>
+              <Button type="submit">Search</Button>
             </Form.Input>
           </Form>
         </Menu.Item>
       </Container>
     </Menu>
-  );
+  )
 }
 
-export default Navbar;
+export default Navbar

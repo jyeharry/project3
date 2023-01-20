@@ -1,19 +1,23 @@
-import '../css/App.css';
-import React from 'react';
-
-import {HashRouter as Router, Route} from 'react-router-dom';
+import '../css/App.css'
 import 'semantic-ui-css/semantic.min.css'
+import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import Home from './Home'
+import { Stock, stockLoader } from '../routes/Stock'
+import { Root } from '../routes/Root'
 
-import Home from './Home';
-import Stock from './Stock';
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <Root />,
+    children: [
+      { index: true, element: <Home /> },
+      { path: 'stock/:symbol', loader: stockLoader, element: <Stock /> },
+    ],
+  },
+])
 
 function App() {
-  return (
-      <Router>
-        <Route exact path='/' component={Home} />
-        <Route exact path='/stock/:symbol' component={Stock} />
-      </Router>
-  );
+  return <RouterProvider router={router} />
 }
 
-export default App;
+export default App

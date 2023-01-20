@@ -28,7 +28,7 @@ interface Daily {
     '4. Output Size': string
     '5. Time Zone': string
   }
-  'Time Series (Daily)': Prices & { '8. split coefficient': string }
+  'Time Series (Daily)': Prices
 }
 
 interface Prices {
@@ -40,6 +40,7 @@ interface Prices {
     '5. adjusted close': string
     '6. volume': string
     '7. dividend amount': string
+    '8. split coefficient'?: string
   }
 }
 
@@ -60,40 +61,48 @@ interface Monthly extends Metadata {
   'Monthly Adjusted Time Series': Prices
 }
 
-const Stock = {
+export class Stocks {
   // get stock data for the last day
-  async getIntraday(symbol: string) {
+  static async getIntraday(symbol: string) {
     const data = await alpha.data.intraday(symbol, 'compact', 'JSON', '5min')
     return this.formatData(data['Time Series (5min)'], '4. close')
-  },
+  }
 
   // get historical stock data in daily format
-  async getDays(symbol: string) {
+  static async getDays(symbol: string) {
     const data = await alpha.data.daily_adjusted(symbol, 'full', 'JSON')
     return this.formatData(data['Time Series (Daily)'])
-  },
+  }
 
   // get historical stock data in weekly format
-  async getWeeks(symbol: string) {
+  static async getWeeks(symbol: string) {
     const data = await alpha.data.weekly_adjusted(symbol, 'full', 'JSON')
     return this.formatData(data['Weekly Adjusted Time Series'])
-  },
+  }
 
   // get historical stock data in monthly format
-  async getMonths(symbol: string) {
+  static async getMonths(symbol: string) {
     const data = await alpha.data.monthly_adjusted(symbol, 'full', 'JSON')
     return this.formatData(data['Monthly Adjusted Time Series'])
-  },
+  }
 
   // formats JSON output to an object with two arrays: one for dates/time of the price snapshot and one for the closing price at that time
-  formatData(data: Intraday5Min | Daily | Weekly | Monthly, priceType = '5. adjusted close') {
-    const closingPrices = { dates: [], prices: [] }
+  private static formatData(
+    data:
+      | Intraday5Min['Time Series (5min)']
+      | Daily['Time Series (Daily)']
+      | Weekly['Weekly Adjusted Time Series']
+      | Monthly['Monthly Adjusted Time Series'],
+    priceType = '5. adjusted close',
+  ) {
+    const closingPrices: { dates: string[]; prices: number[] } = {
+      dates: [],
+      prices: [],
+    }
     for (const [date, prices] of Object.entries(data)) {
       closingPrices.dates.unshift(date)
       closingPrices.prices.unshift(parseFloat(prices[priceType]))
     }
     return closingPrices
-  },
+  }
 }
-
-export default Stock
