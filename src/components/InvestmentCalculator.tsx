@@ -74,7 +74,7 @@ export const InvestmentCalculator = ({ symbol, chartData }: any) => {
   }
 
   return (
-    <div className="investmentGraph">
+    <div>
       <Form
         className="formCalculator"
         onSubmit={(e: any) => {

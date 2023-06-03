@@ -7,7 +7,11 @@ export const Root = () => {
   return (
     <>
       <Navbar />
-      {navigation.state === 'loading' ? <Loader active /> : <Outlet />}
+      {navigation.state === 'loading' ? <Loader active /> : (
+        <div className='container'>
+          <Outlet />
+        </div>
+      )}
     </>
   )
 }

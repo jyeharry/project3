@@ -17,3 +17,8 @@ export interface ToggledChart {
   data: StockValues
 }
 
+export interface LoadedStockData {
+  stockData: StockData | null
+  toggledChart: ToggledChart | null
+}
+

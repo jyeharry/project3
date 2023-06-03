@@ -17,7 +17,7 @@ export const InteractiveChart = ({
   handleClick,
 }: InteractiveChartProps) => {
   return (
-    <div className="interactiveChart">
+    <div>
       <div className="buttonContainer">
         <Button
           value={JSON.stringify({
