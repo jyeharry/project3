@@ -1,5 +1,5 @@
 import { Outlet, useNavigation } from 'react-router-dom'
-import { Loader } from 'semantic-ui-react'
+import { Container, Loader } from 'semantic-ui-react'
 import Navbar from '@components/Navbar'
 
 export const Root = () => {
@@ -7,10 +7,12 @@ export const Root = () => {
   return (
     <>
       <Navbar />
-      {navigation.state === 'loading' ? <Loader active /> : (
-        <div className='container'>
+      {navigation.state === 'loading' ? (
+        <Loader active />
+      ) : (
+        <Container>
           <Outlet />
-        </div>
+        </Container>
       )}
     </>
   )

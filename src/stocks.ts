@@ -65,24 +65,28 @@ export class Stocks {
   // get stock data for the last day
   static async getIntraday(symbol: string) {
     const data = await alpha.data.intraday(symbol, 'compact', 'JSON', '5min')
+    console.log('intraday', data)
     return this.formatData(data['Time Series (5min)'], '4. close')
   }
 
   // get historical stock data in daily format
   static async getDays(symbol: string) {
     const data = await alpha.data.daily_adjusted(symbol, 'full', 'JSON')
+    console.log('days', data)
     return this.formatData(data['Time Series (Daily)'])
   }
 
   // get historical stock data in weekly format
   static async getWeeks(symbol: string) {
     const data = await alpha.data.weekly_adjusted(symbol, 'full', 'JSON')
+    console.log('weeks', data)
     return this.formatData(data['Weekly Adjusted Time Series'])
   }
 
   // get historical stock data in monthly format
   static async getMonths(symbol: string) {
     const data = await alpha.data.monthly_adjusted(symbol, 'full', 'JSON')
+    console.log('months', data)
     return this.formatData(data['Monthly Adjusted Time Series'])
   }
 
